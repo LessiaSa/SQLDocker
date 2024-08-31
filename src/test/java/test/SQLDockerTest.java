@@ -4,7 +4,9 @@ import data.DataHelper;
 import data.SQLHelper;
 import org.junit.jupiter.api.*;
 import page.LoginPage;
+
 import static com.codeborne.selenide.Selenide.open;
+import static data.DataHelper.generateRandomUser;
 import static data.SQLHelper.cleanAuthCodes;
 import static data.SQLHelper.cleanDatabase;
 
@@ -16,6 +18,7 @@ public class SQLDockerTest {
     void tearDown() {
         cleanAuthCodes();
     }
+
     // для очистки базы данных после выполнения всех автотестов(после этого надо перезапустить джарник)
     @AfterAll
     static void tearDownAll() {
@@ -39,8 +42,8 @@ public class SQLDockerTest {
 
     @Test
     @DisplayName("Should get error notification if user is not exist in base")
-    void shouldGetErrorNotificationIfLogin() {
-        var authInfo = DataHelper.generateRandomUser();
+    void shouldGetErrorNotificationIfLoginRandomUser() {
+        var authInfo = generateRandomUser();
         loginPage.login(authInfo);
         loginPage.verifyErrorNotification("Ошибка! \nНеверно указан логин или пароль");
     }
